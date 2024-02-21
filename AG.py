@@ -1,3 +1,23 @@
+# Leitura dos dados de entrada: Não precisamos alterar essa parte, pois  já tem uma função 
+# ler_arquivo que faz a leitura dos dados de entrada.
+
+# Armazenamento dos dados de entrada: Também não precisamos fazer alterações aqui, 
+# pois já tem a classe Dados para armazenar os dados do problema.
+
+# Estrutura para representação (armazenamento) de uma solução: No algoritmo genético, a solução será uma lista de números inteiros representando as colunas selecionadas. 
+# Portanto, não precisamos de uma estrutura específica para armazenar a solução além da lista de índices das colunas selecionadas.
+
+# Estrutura para armazenamento da população de soluções: Precisaremos de uma lista de soluções para representar a população.
+# Cada solução será uma lista de índices das colunas selecionadas.
+
+# O Algoritmo Genético:
+    # Função de Seleção das soluções para cruzamento: vai ser o método da roleta viciada, onde a probabilidade de seleção de cada solução é proporcional à sua aptidão.
+    # Função para cruzamento das soluções: Vamos implementar o crossover de um ponto, onde um ponto de corte é escolhido aleatoriamente e as partes das soluções pais são trocadas.
+    # Função de mutação: Implementaremos a mutação por inversão, onde escolhemos dois pontos de corte e invertemos a ordem dos genes entre esses pontos.
+    # Procedimento de busca local: Como você já temos uma função de melhoramento, vamos usá-la como procedimento de busca local após a etapa de mutação.
+    # Definir e implementar o critério de parada do algoritmo genético: Vamos utilizar um número máximo de gerações como critério de parada.
+
+
 from copy import deepcopy
 import math
 import random
