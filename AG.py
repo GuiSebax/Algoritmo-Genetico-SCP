@@ -209,7 +209,7 @@ def mutacao(solucao, probabilidade_mutacao):
 def melhoramento(solucao, dados):
     d = 0
     D = math.ceil(random.uniform(0.05, 0.7) * len(solucao[0]))
-    E = math.ceil(random.uniform(1.1, 2) * max(dados.colunas[j].custo for j in solucao[0]))
+    E = math.ceil(random.uniform(1.1, 3) * max(dados.colunas[j].custo for j in solucao[0]))
 
     # Quantidade de colunas que cobrem cada linha
     wi = [0] * dados.nlinhas
@@ -241,6 +241,10 @@ def melhoramento(solucao, dados):
         # Lista de colunas que não estão na solução e que possuem custo menor ou igual a E
         Re = list(j for j in colunas_fora_da_solucao if dados.colunas[j].custo <= E)
 
+        while len(Re) == 0:
+            E = math.ceil(random.uniform(1.1, 3) * max(dados.colunas[j].custo for j in solucao[0]))
+            Re = list(j for j in colunas_fora_da_solucao if dados.colunas[j].custo <= E)
+
         alpha_j = []
         for coluna in Re:
             # calcular quantas linhas não cobertas Re cobre
@@ -254,6 +258,7 @@ def melhoramento(solucao, dados):
             (dados.colunas[j].custo / alpha_j[i]) if alpha_j[i] != 0 else inf
             for i, j in enumerate(Re)
         ]
+
         bmin = min(beta_j)
         K = set(j for j, beta_j in zip(Re, beta_j) if beta_j == bmin)
 
