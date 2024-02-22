@@ -136,8 +136,7 @@ def valid_solution(solucao, dados):
     return sum(rows) == dados.nlinhas
 
 # Algoritmo genético combinado com busca local
-def algoritmo_genetico_com_busca_local(dados, tamanho_populacao, num_geracoes, probabilidade_mutacao):
-
+def algoritmo_genetico_com_busca_local(dados, tamanho_populacao, num_geracoes, probabilidade_mutacao, elitismo_ratio=0.1):
     start = timer()
 
     # Inicialização da população
@@ -151,13 +150,12 @@ def algoritmo_genetico_com_busca_local(dados, tamanho_populacao, num_geracoes, p
         # Seleção dos pais para o cruzamento
         pais_selecionados = selecao(populacao, dados)
         
-        # Cruzamento
+        # Cruzamento e mutação
         for i in range(0, len(pais_selecionados), 2):
             pai1 = pais_selecionados[i]
             pai2 = pais_selecionados[i+1]
             filho1, filho2 = crossover_um_ponto(pai1, pai2)
 
-            # Mutação
             filho1 = mutacao(filho1, probabilidade_mutacao)
             filho2 = mutacao(filho2, probabilidade_mutacao)
 
@@ -167,21 +165,26 @@ def algoritmo_genetico_com_busca_local(dados, tamanho_populacao, num_geracoes, p
         for i in range(len(nova_populacao)):
             nova_populacao[i] = busca_local(nova_populacao[i], dados)
 
-        # Atualização da população
-        populacao = nova_populacao
+        # Elitismo: mantém os melhores indivíduos da população anterior
+        num_elitismo = int(elitismo_ratio * tamanho_populacao)
+        melhores_individuos = sorted(populacao, key=lambda x: sum(dados.colunas[j].custo for j in x))[:num_elitismo]
+        nova_populacao.extend(melhores_individuos)
+
+        # Ordena a nova população pelos custos
+        nova_populacao = sorted(nova_populacao, key=lambda x: sum(dados.colunas[j].custo for j in x))
+
+        # Seleciona os melhores indivíduos para compor a próxima geração
+        populacao = nova_populacao[:tamanho_populacao]
 
         # Atualização da melhor solução encontrada até o momento
-        for solucao in populacao:
-            custo = sum([dados.colunas[j].custo for j in solucao])
-            if custo < melhor_custo:
-                melhor_solucao = solucao
-                melhor_custo = custo
+        melhor_solucao = populacao[0]
+        melhor_custo = sum(dados.colunas[j].custo for j in melhor_solucao)
 
     end = timer()
-
     tempoDeExecucao = end - start
 
     return melhor_solucao, melhor_custo, tempoDeExecucao
+
 
 # Função de seleção dos pais para cruzamento (roleta viciada)
 def selecao(populacao, dados):
@@ -301,9 +304,9 @@ def main():
     tamanho_populacao = int(sys.argv[2])
     num_geracoes = int(sys.argv[3])
     probabilidade_mutacao = float(sys.argv[4])
-
+    elitismo_ratio = float(sys.argv[5])
     dados = ler_arquivo(nome_do_arquivo)
-    melhor_solucao, melhor_custo, tempo_execucao = algoritmo_genetico_com_busca_local(dados, tamanho_populacao, num_geracoes, probabilidade_mutacao)
+    melhor_solucao, melhor_custo, tempo_execucao = algoritmo_genetico_com_busca_local(dados, tamanho_populacao, num_geracoes, probabilidade_mutacao, elitismo_ratio)
 
     # Corrigindo a solução para somar 1 apenas aos valores
     melhor_solucao_corrigida = [coluna + 1 for coluna in melhor_solucao]
