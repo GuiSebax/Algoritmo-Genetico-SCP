@@ -1,0 +1,40 @@
+Arquivo: ./entradas/teste_01.dat
+Melhor solucao encontrada: [10, 278, 44, 185, 129, 133, 242, 77, 58, 109]
+Custo da melhor solucao: 594.76
+Tempo de execucao: 8.516587100108154 segundos
+
+Arquivo: ./entradas/teste_02.dat
+Melhor solucao encontrada: [152, 253, 471, 488, 296, 458, 302, 110, 370]
+Custo da melhor solucao: 544.6
+Tempo de execucao: 12.30483230005484 segundos
+
+Arquivo: ./entradas/teste_03.dat
+Melhor solucao encontrada: [569, 190, 341, 10, 402, 538, 39, 4, 421]
+Custo da melhor solucao: 517.52
+Tempo de execucao: 17.217532800044864 segundos
+
+Arquivo: ./entradas/teste_04.dat
+Melhor solucao encontrada: [194, 72, 244, 56, 296, 197, 176, 253, 461, 211, 41, 326, 359, 226, 165, 484, 468, 44, 433]
+Custo da melhor solucao: 1157.08
+Tempo de execucao: 24.2667964999564 segundos
+
+Arquivo: ./entradas/wren_01.dat
+Melhor solucao encontrada: [488, 146, 250, 75, 240, 249, 303, 338, 208, 1, 241, 126, 345, 2, 324, 323]
+Custo da melhor solucao: 8142.0
+Tempo de execucao: 41.79023609997239 segundos
+
+Arquivo: ./entradas/wren_02.dat
+Melhor solucao encontrada: [1540, 5363, 5071, 5460, 5409, 5399, 5081, 2770, 2399, 5477, 5408, 4979, 5426, 4990, 826, 2791, 5147, 5482, 5074, 5427, 5522, 5481, 5459, 5503, 5040, 5050, 5484, 5389, 2999, 436, 5516, 5502, 5097]
+Custo da melhor solucao: 13866.0
+Tempo de execucao: 532.7040364999557 segundos
+
+Arquivo: ./entradas/wren_03.dat
+Melhor solucao encontrada: [4380, 2245, 1164, 1267, 4869, 4634, 4210, 3981, 4964, 4969, 4790, 4901, 4862, 4881, 4629, 80, 4839, 4937, 4936, 4551, 4686, 4695, 1959, 4503, 4654, 4919, 646, 4882, 2453, 1687, 4900, 4575]
+Custo da melhor solucao: 13749.0
+Tempo de execucao: 477.54407699999865 segundos
+
+Arquivo: ./entradas/wren_04.dat
+Melhor solucao encontrada: [1252, 1007, 2309, 4515, 1022, 2924, 78, 3261, 3111, 1167, 2862, 2439, 2646, 1084, 1098, 2390, 1895, 516, 1882, 230, 1711, 686, 3883, 2716, 1413, 4255, 2518, 825, 2760, 2741, 1073, 51, 3365, 1632, 2483, 2631, 1780, 3458, 3356, 4416, 2706, 3249, 2679, 973, 533, 2734, 3858, 3979, 2558, 1788, 1324, 756, 132, 90, 735, 647, 3876, 763, 2966, 426, 182, 2437, 248, 2246, 4374, 939, 1802, 558, 2815, 2057, 1773, 915, 2765, 1732, 2787, 2047, 2731, 1475, 1572, 2802, 4016, 310, 3122, 289, 3719, 1936, 142, 3482, 4193, 1272, 1228, 2775, 1377, 1168, 1393, 133, 1857, 599, 172, 2077, 715, 937, 2624, 616, 4377, 3385, 1815, 2883, 1300, 140, 1847, 2627, 2575, 263, 2893, 211, 3934, 654, 631, 2766, 4488, 4444, 3027, 282]
+Custo da melhor solucao: 61286.0
+Tempo de execucao: 1882.617970100022 segundos
+
