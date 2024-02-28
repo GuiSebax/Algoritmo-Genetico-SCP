@@ -1,23 +1,3 @@
-# Leitura dos dados de entrada: Não precisamos alterar essa parte, pois  já tem uma função 
-# ler_arquivo que faz a leitura dos dados de entrada.
-
-# Armazenamento dos dados de entrada: Também não precisamos fazer alterações aqui, 
-# pois já tem a classe Dados para armazenar os dados do problema.
-
-# Estrutura para representação (armazenamento) de uma solução: No algoritmo genético, a solução será uma lista de números inteiros representando as colunas selecionadas. 
-# Portanto, não precisamos de uma estrutura específica para armazenar a solução além da lista de índices das colunas selecionadas.
-
-# Estrutura para armazenamento da população de soluções: Precisaremos de uma lista de soluções para representar a população.
-# Cada solução será uma lista de índices das colunas selecionadas.
-
-# O Algoritmo Genético:
-    # Função de Seleção das soluções para cruzamento: vai ser o método da roleta viciada, onde a probabilidade de seleção de cada solução é proporcional à sua aptidão.
-    # Função para cruzamento das soluções: Vamos implementar o crossover de um ponto, onde um ponto de corte é escolhido aleatoriamente e as partes das soluções pais são trocadas.
-    # Função de mutação: Implementaremos a mutação por inversão, onde escolhemos dois pontos de corte e invertemos a ordem dos genes entre esses pontos.
-    # Procedimento de busca local: Como você já temos uma função de melhoramento, vamos usá-la como procedimento de busca local após a etapa de mutação.
-    # Definir e implementar o critério de parada do algoritmo genético: Vamos utilizar um número máximo de gerações como critério de parada.
-
-
 from copy import deepcopy
 import math
 import random
@@ -136,7 +116,53 @@ def valid_solution(solucao, dados):
     return sum(rows) == dados.nlinhas
 
 # Algoritmo genético combinado com busca local
-def algoritmo_genetico_com_busca_local(dados, tamanho_populacao, num_geracoes, probabilidade_mutacao, elitismo_ratio=0.1):
+def algoritmo_genetico_sem_busca_local(dados, tamanho_populacao, num_geracoes, probabilidade_mutacao, elitismo_ratio=0.9):
+    start = timer()
+
+    # Inicialização da população
+    populacao = [construtivo(dados)[0] for _ in range(tamanho_populacao)]
+    melhor_solucao = None
+    melhor_custo = float('inf')
+
+    for geracao in range(num_geracoes):
+        nova_populacao = []
+
+        # Seleção dos pais para o cruzamento
+        pais_selecionados = selecao(populacao, dados)
+        
+        # Cruzamento e mutação
+        for i in range(0, len(pais_selecionados), 2):
+            pai1 = pais_selecionados[i]
+            pai2 = pais_selecionados[i+1]
+            filho1, filho2 = crossover_um_ponto(pai1, pai2)
+
+            filho1 = mutacao(filho1, probabilidade_mutacao)
+            filho2 = mutacao(filho2, probabilidade_mutacao)
+
+            nova_populacao.extend([filho1, filho2])
+
+        # Elitismo: mantém os melhores indivíduos da população anterior
+        num_elitismo = int(elitismo_ratio * tamanho_populacao)
+        melhores_individuos = sorted(populacao, key=lambda x: sum(dados.colunas[j].custo for j in x))[:num_elitismo]
+        nova_populacao.extend(melhores_individuos)
+
+        # Ordena a nova população pelos custos
+        nova_populacao = sorted(nova_populacao, key=lambda x: sum(dados.colunas[j].custo for j in x))
+
+        # Seleciona os melhores indivíduos para compor a próxima geração
+        populacao = nova_populacao[:tamanho_populacao]
+
+        # Atualização da melhor solução encontrada até o momento
+        melhor_solucao = populacao[0]
+        melhor_custo = sum(dados.colunas[j].custo for j in melhor_solucao)
+
+    end = timer()
+    tempoDeExecucao = end - start
+
+    return melhor_solucao, melhor_custo, tempoDeExecucao
+
+# Algoritmo genético combinado com busca local
+def algoritmo_genetico_com_busca_local(dados, tamanho_populacao, num_geracoes, probabilidade_mutacao, elitismo_ratio=0.9):
     start = timer()
 
     # Inicialização da população
@@ -186,20 +212,19 @@ def algoritmo_genetico_com_busca_local(dados, tamanho_populacao, num_geracoes, p
     return melhor_solucao, melhor_custo, tempoDeExecucao
 
 
-# Função de seleção dos pais para cruzamento (roleta viciada)
 def selecao(populacao, dados):
-    custos = [sum([dados.colunas[j].custo for j in solucao]) for solucao in populacao]
-    soma_custos = sum(custos)
-    probabilidades = [custo / soma_custos for custo in custos]
-    pais_selecionados = random.choices(populacao, weights=probabilidades, k=len(populacao))
+    num_individuos = len(populacao)
+    num_torneios = num_individuos // 2
+    tamanho_torneio = 3
+    
+    pais_selecionados = []
+    
+    for _ in range(num_torneios):
+        torneio = random.sample(populacao, tamanho_torneio)
+        vencedor = max(torneio, key=lambda x: sum(dados.colunas[j].custo for j in x))
+        pais_selecionados.append(vencedor)
+    
     return pais_selecionados
-
-# Operador de crossover de um ponto
-def crossover_um_ponto(pai1, pai2):
-    ponto_corte = random.randint(1, min(len(pai1), len(pai2)) - 1)
-    filho1 = pai1[:ponto_corte] + pai2[ponto_corte:]
-    filho2 = pai2[:ponto_corte] + pai1[ponto_corte:]
-    return filho1, filho2
 
 # Operador de mutação por inversão
 def mutacao(solucao, probabilidade_mutacao):
@@ -209,6 +234,13 @@ def mutacao(solucao, probabilidade_mutacao):
         solucao[ponto1:ponto2+1] = reversed(solucao[ponto1:ponto2+1])
     return solucao
 
+# Função que implementa a busca local
+def busca_local(solucao, dados):
+    solucao = list(solucao)  # Convertendo para lista para facilitar a manipulação
+    solucao, custo = melhoramento((solucao, sum([dados.colunas[j].custo for j in solucao])), dados)
+    return solucao
+
+# Função que implementa o algoritmo de melhoramento
 def melhoramento(solucao, dados):
     d = 0
     D = math.ceil(random.uniform(0.05, 0.7) * len(solucao[0]))
@@ -293,27 +325,39 @@ def melhoramento(solucao, dados):
 
     return solucao
 
-# Função que implementa a busca local
-def busca_local(solucao, dados):
-    solucao = list(solucao)  # Convertendo para lista para facilitar a manipulação
-    solucao, custo = melhoramento((solucao, sum([dados.colunas[j].custo for j in solucao])), dados)
-    return solucao
+
+# Operador de cruzamento de um ponto
+def crossover_um_ponto(pai1, pai2):
+    ponto_corte = random.randint(1, min(len(pai1), len(pai2)) - 1)
+    filho1 = pai1[:ponto_corte] + [gene for gene in pai2 if gene not in pai1[:ponto_corte]]
+    filho2 = pai2[:ponto_corte] + [gene for gene in pai1 if gene not in pai2[:ponto_corte]]
+    return filho1, filho2
+
 
 def main():
-    nome_do_arquivo = sys.argv[1]
-    tamanho_populacao = int(sys.argv[2])
-    num_geracoes = int(sys.argv[3])
-    probabilidade_mutacao = float(sys.argv[4])
-    elitismo_ratio = float(sys.argv[5])
-    dados = ler_arquivo(nome_do_arquivo)
-    melhor_solucao, melhor_custo, tempo_execucao = algoritmo_genetico_com_busca_local(dados, tamanho_populacao, num_geracoes, probabilidade_mutacao, elitismo_ratio)
+    arq = "entradas/Teste_01.dat"  # Substitua pelo nome do seu arquivo
+    dados = ler_arquivo(arq)
+    tamanho_populacao = 100
+    num_geracoes = 100
+    probabilidade_mutacao = 0.9
 
-    # Corrigindo a solução para somar 1 apenas aos valores
-    melhor_solucao_corrigida = [coluna + 1 for coluna in melhor_solucao]
+    # Rodando o algoritmo genético sem busca local
+    melhor_solucao_sem_busca_local, melhor_custo_sem_busca_local, tempo_sem_busca_local = algoritmo_genetico_sem_busca_local(
+        dados, tamanho_populacao, num_geracoes, probabilidade_mutacao
+    )
+    print("Melhor solucao encontrada (sem busca local):", [coluna + 1 for coluna in melhor_solucao_sem_busca_local])  # Modificado aqui
+    print("Custo da melhor solucao (sem busca local):", melhor_custo_sem_busca_local)
+    print("Tempo de execucao (sem busca local):", tempo_sem_busca_local, "segundos")
 
-    print(f"Melhor solução encontrada: {melhor_solucao_corrigida}")
-    print(f"Custo da melhor solução: {melhor_custo}")
-    print(f"Tempo de execução: {tempo_execucao} segundos")
+    # Rodando o algoritmo genético com busca local
+    melhor_solucao_com_busca_local, melhor_custo_com_busca_local, tempo_com_busca_local = algoritmo_genetico_com_busca_local(
+        dados, tamanho_populacao, num_geracoes, probabilidade_mutacao
+    )
+    print("Melhor solucao encontrada (com busca local):", [coluna + 1 for coluna in melhor_solucao_com_busca_local])  # Modificado aqui
+    print("Custo da melhor solucao (com busca local):", melhor_custo_com_busca_local)
+    print("Tempo de execucao (com busca local):", tempo_com_busca_local, "segundos")
+
 
 if __name__ == "__main__":
     main()
+
