@@ -213,17 +213,10 @@ def algoritmo_genetico_com_busca_local(dados, tamanho_populacao, num_geracoes, p
 
 
 def selecao(populacao, dados):
-    num_individuos = len(populacao)
-    num_torneios = num_individuos // 2
-    tamanho_torneio = 3
-    
-    pais_selecionados = []
-    
-    for _ in range(num_torneios):
-        torneio = random.sample(populacao, tamanho_torneio)
-        vencedor = max(torneio, key=lambda x: sum(dados.colunas[j].custo for j in x))
-        pais_selecionados.append(vencedor)
-    
+    custos = [sum([dados.colunas[j].custo for j in solucao]) for solucao in populacao]
+    soma_custos = sum(custos)
+    probabilidades = [custo / soma_custos for custo in custos]
+    pais_selecionados = random.choices(populacao, weights=probabilidades, k=len(populacao))
     return pais_selecionados
 
 # Operador de mutação por inversão
