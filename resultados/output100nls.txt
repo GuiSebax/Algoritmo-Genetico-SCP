@@ -1,0 +1,31 @@
+Melhor solucao encontrada (sem busca local): [134, 220, 142, 62, 129, 125, 141, 50, 299, 261, 99]
+Custo da melhor solucao (sem busca local): 656.8199999999999
+Tempo de execucao (sem busca local): 0.30210729999816976 segundos
+
+Melhor solucao encontrada (sem busca local): [431, 348, 144, 302, 187, 159, 95, 48, 66, 217]
+Custo da melhor solucao (sem busca local): 610.68
+Tempo de execucao (sem busca local): 0.42219070000282954 segundos
+
+Melhor solucao encontrada (sem busca local): [157, 150, 475, 504, 265, 91, 192, 345, 113, 10]
+Custo da melhor solucao (sem busca local): 590.31
+Tempo de execucao (sem busca local): 0.5588510999950813 segundos
+
+Melhor solucao encontrada (sem busca local): [52, 434, 307, 20, 415, 26, 41, 316, 484, 242, 244, 174, 296, 37, 211, 359, 468, 42, 165, 478, 176]
+Custo da melhor solucao (sem busca local): 1320.71
+Tempo de execucao (sem busca local): 0.8337590000010096 segundos
+
+Melhor solucao encontrada (sem busca local): [361, 532, 250, 328, 330, 249, 88, 241, 353, 325, 240, 208, 149, 65, 1, 309, 179]
+Custo da melhor solucao (sem busca local): 9032.0
+Tempo de execucao (sem busca local): 0.9209990000017569 segundos
+
+Melhor solucao encontrada (sem busca local): [18, 5001, 5400, 4831, 5269, 5452, 5070, 3046, 5019, 5411, 1850, 5430, 4991, 5479, 5364, 5506, 5086, 5083, 5486, 5008, 5463, 5064, 5056, 4481, 1924, 5363, 5147, 5116, 115, 2400, 4750, 5042]
+Custo da melhor solucao (sem busca local): 15820.0
+Tempo de execucao (sem busca local): 10.911699000003864 segundos
+
+Melhor solucao encontrada (sem busca local): [1979, 2226, 130, 2207, 1165, 681, 1010, 4885, 4923, 1148, 4582, 2332, 4654, 1756, 2873, 3797, 3879, 4686, 4551, 4696, 4509, 4643, 4633, 300, 4530, 4666, 4575, 1255, 1401, 122, 4477, 4919, 4881]
+Custo da melhor solucao (sem busca local): 16471.0
+Tempo de execucao (sem busca local): 10.564253600001393 segundos
+
+Melhor solucao encontrada (sem busca local): [2360, 79, 599, 2629, 3931, 4194, 2199, 2019, 4444, 141, 3083, 134, 1944, 2000, 2128, 2148, 4246, 2234, 2747, 1815, 2325, 1864, 4503, 2066, 917, 1081, 2246, 2151, 142, 1805, 1834, 2436, 4379, 4019, 2799, 4402, 3944, 745, 4439, 3932, 4093, 3878, 937, 4092, 885, 2763, 4320, 2862, 2389, 3608, 51, 3771, 3835, 4420, 3530, 2725, 1389, 2538, 595, 1231, 290, 2534, 2699, 1376, 906, 3102, 247, 676, 2664, 763, 2582, 576, 715, 532, 2733, 183, 510, 90, 3259, 248, 2561, 855, 2949, 2625, 2451, 642, 208, 1482, 302, 999, 1184, 2631, 3111, 1627, 2439, 402, 1293, 519, 1732, 1352, 688, 1542, 2885, 228, 607, 1250, 1532, 2804, 3123, 840, 3284, 3385, 2814, 181, 3362, 2893, 3456, 442, 648, 1767, 3030, 967, 1534, 1093, 1160, 3281, 2775, 734, 1273, 1439, 1014]
+Custo da melhor solucao (sem busca local): 65866.0
+Tempo de execucao (sem busca local): 39.75194069999998 segundos

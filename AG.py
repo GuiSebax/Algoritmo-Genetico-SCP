@@ -328,27 +328,33 @@ def crossover_um_ponto(pai1, pai2):
 
 
 def main():
-    arq = "entradas/Teste_01.dat"  # Substitua pelo nome do seu arquivo
-    dados = ler_arquivo(arq)
-    tamanho_populacao = 100
-    num_geracoes = 100
-    probabilidade_mutacao = 0.9
+    nome_do_arquivo = sys.argv[1]
+    tamanho_populacao = int(sys.argv[2])
+    num_geracoes = int(sys.argv[3])
+    probabilidade_mutacao = float(sys.argv[4])
+    elitismo_ratio = float(sys.argv[5])
+    busca_local = int(sys.argv[6]) # 0 para nao usar busca local, 1 para usar busca local
+    dados = ler_arquivo(nome_do_arquivo)
+
 
     # Rodando o algoritmo genético sem busca local
-    melhor_solucao_sem_busca_local, melhor_custo_sem_busca_local, tempo_sem_busca_local = algoritmo_genetico_sem_busca_local(
-        dados, tamanho_populacao, num_geracoes, probabilidade_mutacao
-    )
-    print("Melhor solucao encontrada (sem busca local):", [coluna + 1 for coluna in melhor_solucao_sem_busca_local])  # Modificado aqui
-    print("Custo da melhor solucao (sem busca local):", melhor_custo_sem_busca_local)
-    print("Tempo de execucao (sem busca local):", tempo_sem_busca_local, "segundos")
-
-    # Rodando o algoritmo genético com busca local
-    melhor_solucao_com_busca_local, melhor_custo_com_busca_local, tempo_com_busca_local = algoritmo_genetico_com_busca_local(
-        dados, tamanho_populacao, num_geracoes, probabilidade_mutacao
-    )
-    print("Melhor solucao encontrada (com busca local):", [coluna + 1 for coluna in melhor_solucao_com_busca_local])  # Modificado aqui
-    print("Custo da melhor solucao (com busca local):", melhor_custo_com_busca_local)
-    print("Tempo de execucao (com busca local):", tempo_com_busca_local, "segundos")
+    if(busca_local == 0):
+        melhor_solucao_sem_busca_local, melhor_custo_sem_busca_local, tempo_sem_busca_local = algoritmo_genetico_sem_busca_local(
+            dados, tamanho_populacao, num_geracoes, probabilidade_mutacao, elitismo_ratio
+        )
+        print("Melhor solucao encontrada (sem busca local):", [coluna + 1 for coluna in melhor_solucao_sem_busca_local])  # Modificado aqui
+        print("Custo da melhor solucao (sem busca local):", melhor_custo_sem_busca_local)
+        print("Tempo de execucao (sem busca local):", tempo_sem_busca_local, "segundos")
+    
+    elif(busca_local == 1):
+            
+        # Rodando o algoritmo genético com busca local
+        melhor_solucao_com_busca_local, melhor_custo_com_busca_local, tempo_com_busca_local = algoritmo_genetico_com_busca_local(
+            dados, tamanho_populacao, num_geracoes, probabilidade_mutacao, elitismo_ratio
+        )
+        print("Melhor solucao encontrada (com busca local):", [coluna + 1 for coluna in melhor_solucao_com_busca_local])  # Modificado aqui
+        print("Custo da melhor solucao (com busca local):", melhor_custo_com_busca_local)
+        print("Tempo de execucao (com busca local):", tempo_com_busca_local, "segundos")
 
 
 if __name__ == "__main__":
