@@ -260,13 +260,6 @@ def algoritmo_genetico_com_busca_local(
     # plt.title("Desvio Padrão do Custo por Geração")
     # plt.show()
 
-    # # Plotando o gráfico do desvio padrão da população
-    # plt.plot(desvio_padrao_geracoes)
-    # plt.xlabel("Geração")
-    # plt.ylabel("Desvio Padrão do Custo")
-    # plt.title("Desvio Padrão do Custo por Geração")
-    # plt.show()
-
     return melhor_solucao, melhor_custo, tempoDeExecucao
 
 
@@ -274,9 +267,6 @@ def selecao(populacao, dados):
     custos = [sum([dados.colunas[j].custo for j in solucao]) for solucao in populacao]
     soma_custos = sum(custos)
     probabilidades = [custo / soma_custos for custo in custos]
-    pais_selecionados = random.choices(
-        populacao, weights=probabilidades, k=len(populacao)
-    )
     pais_selecionados = random.choices(
         populacao, weights=probabilidades, k=len(populacao)
     )
@@ -290,7 +280,6 @@ def mutacao(solucao, probabilidade_mutacao):
         ponto1, ponto2 = random.sample(range(len(solucao)), 2)
         ponto1, ponto2 = min(ponto1, ponto2), max(ponto1, ponto2)
         solucao[ponto1 : ponto2 + 1] = reversed(solucao[ponto1 : ponto2 + 1])
-        solucao[ponto1 : ponto2 + 1] = reversed(solucao[ponto1 : ponto2 + 1])
     return solucao
 
 
@@ -298,9 +287,6 @@ def mutacao(solucao, probabilidade_mutacao):
 # Função que implementa a busca local
 def busca_local(solucao, dados):
     solucao = list(solucao)  # Convertendo para lista para facilitar a manipulação
-    solucao, custo = melhoramento(
-        (solucao, sum([dados.colunas[j].custo for j in solucao])), dados
-    )
     solucao, custo = melhoramento(
         (solucao, sum([dados.colunas[j].custo for j in solucao])), dados
     )
