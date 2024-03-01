@@ -1,1 +1,0 @@
-Multiplicar o tempo por 2.5 no teste com 500, pois foi utilizado pypy para executar e nao o compilador do Python
