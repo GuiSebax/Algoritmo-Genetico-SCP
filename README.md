@@ -4,17 +4,17 @@ Para testar usando os testes que nós usamos para obter as respostas, basta roda
 
 Para uma população de 100 e uma geração de 100 com busca local use
 
-   ```.\run_tests100.bat```
+```.\run_tests100.bat```
 
-   E ele ira adicionar os resultados em um ```output100.txt```
+E ele ira adicionar os resultados em um ```output100.txt```
 
-   Para uma população de 100 e uma geração de 500 com busca local use
+Para uma população de 100 e uma geração de 500 com busca local use
 
-    ```.\run_tests500.bat```
+```.\run_tests500.bat```
     
-    E ele ira adicionar os resultados em um ```output500.txt```
+E ele ira adicionar os resultados em um ```output500.txt```
     
-    Agora caso queira sem busca local, basta rodar os seguintes comandos:
+Agora caso queira sem busca local, basta rodar os seguintes comandos:
 
    ```.\run_tests100noLocalSearch.bat``` ou 
   ```.\run_tests500noLocalSearch.bat```
