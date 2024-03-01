@@ -4,11 +4,9 @@ import random
 from math import inf
 import sys
 from timeit import default_timer as timer
-import matplotlib.pyplot as plt
-import numpy as np
+# import matplotlib.pyplot as plt
+# import numpy as np
 
-import matplotlib.pyplot as plt
-import numpy as np
 
 
 # Classe que representa uma coluna de dados contendo (numero da coluna, custo, linhas que a coluna cobre)
@@ -108,13 +106,6 @@ def construtivo(dados):
                 if num_linhas_cobertas_por_coluna[j] > 0
                 else float("inf")
             ),
-            key=lambda j: (
-                funcao_aleatoria(
-                    dados.colunas[j].custo, num_linhas_cobertas_por_coluna[j]
-                )
-                if num_linhas_cobertas_por_coluna[j] > 0
-                else float("inf")
-            ),
         )
 
         R = R.difference(Pj[J])
@@ -156,20 +147,15 @@ def algoritmo_genetico_sem_busca_local(
     populacao = [construtivo(dados)[0] for _ in range(tamanho_populacao)]
     melhor_solucao = None
     melhor_custo = float("inf")
-    
-    melhor_custo = float("inf")
    
     for geracao in range(num_geracoes):
         nova_populacao = []
 
         # Seleção dos pais para o cruzamento
         pais_selecionados = selecao(populacao, dados)
-
-
         # Cruzamento e mutação
         for i in range(0, len(pais_selecionados), 2):
             pai1 = pais_selecionados[i]
-            pai2 = pais_selecionados[i + 1]
             pai2 = pais_selecionados[i + 1]
             filho1, filho2 = crossover_um_ponto(pai1, pai2)
 
@@ -183,15 +169,9 @@ def algoritmo_genetico_sem_busca_local(
         melhores_individuos = sorted(
             populacao, key=lambda x: sum(dados.colunas[j].custo for j in x)
         )[:num_elitismo]
-        melhores_individuos = sorted(
-            populacao, key=lambda x: sum(dados.colunas[j].custo for j in x)
-        )[:num_elitismo]
         nova_populacao.extend(melhores_individuos)
 
         # Ordena a nova população pelos custos
-        nova_populacao = sorted(
-            nova_populacao, key=lambda x: sum(dados.colunas[j].custo for j in x)
-        )
         nova_populacao = sorted(
             nova_populacao, key=lambda x: sum(dados.colunas[j].custo for j in x)
         )
@@ -221,10 +201,6 @@ def algoritmo_genetico_com_busca_local(
 
     # Lista para armazenar o desvio padrão de cada geração
     desvio_padrao_geracoes = []
-    melhor_custo = float("inf")
-
-    # Lista para armazenar o desvio padrão de cada geração
-    desvio_padrao_geracoes = []
 
     for geracao in range(num_geracoes):
         nova_populacao = []
@@ -232,12 +208,11 @@ def algoritmo_genetico_com_busca_local(
         # Seleção dos pais para o cruzamento
         pais_selecionados = selecao(populacao, dados)
 
-
         # Cruzamento e mutação
         for i in range(0, len(pais_selecionados), 2):
             pai1 = pais_selecionados[i]
             pai2 = pais_selecionados[i + 1]
-            pai2 = pais_selecionados[i + 1]
+
             filho1, filho2 = crossover_um_ponto(pai1, pai2)
 
             filho1 = mutacao(filho1, probabilidade_mutacao)
@@ -254,15 +229,9 @@ def algoritmo_genetico_com_busca_local(
         melhores_individuos = sorted(
             populacao, key=lambda x: sum(dados.colunas[j].custo for j in x)
         )[:num_elitismo]
-        melhores_individuos = sorted(
-            populacao, key=lambda x: sum(dados.colunas[j].custo for j in x)
-        )[:num_elitismo]
         nova_populacao.extend(melhores_individuos)
 
         # Ordena a nova população pelos custos
-        nova_populacao = sorted(
-            nova_populacao, key=lambda x: sum(dados.colunas[j].custo for j in x)
-        )
         nova_populacao = sorted(
             nova_populacao, key=lambda x: sum(dados.colunas[j].custo for j in x)
         )
@@ -275,35 +244,28 @@ def algoritmo_genetico_com_busca_local(
         melhor_custo = sum(dados.colunas[j].custo for j in melhor_solucao)
 
         # Calcula o desvio padrão da população atual
-        custos = [
-            sum([dados.colunas[j].custo for j in solucao]) for solucao in populacao
-        ]
-        desvio_padrao = np.std(custos)
-        desvio_padrao_geracoes.append(desvio_padrao)
-
-        # Calcula o desvio padrão da população atual
-        custos = [
-            sum([dados.colunas[j].custo for j in solucao]) for solucao in populacao
-        ]
-        desvio_padrao = np.std(custos)
-        desvio_padrao_geracoes.append(desvio_padrao)
+        # custos = [
+        #     sum([dados.colunas[j].custo for j in solucao]) for solucao in populacao
+        # ]
+        # desvio_padrao = np.std(custos)
+        # desvio_padrao_geracoes.append(desvio_padrao)
 
     end = timer()
     tempoDeExecucao = end - start
 
-    # Plotando o gráfico do desvio padrão da população
-    plt.plot(desvio_padrao_geracoes)
-    plt.xlabel("Geração")
-    plt.ylabel("Desvio Padrão do Custo")
-    plt.title("Desvio Padrão do Custo por Geração")
-    plt.show()
+    # # Plotando o gráfico do desvio padrão da população
+    # plt.plot(desvio_padrao_geracoes)
+    # plt.xlabel("Geração")
+    # plt.ylabel("Desvio Padrão do Custo")
+    # plt.title("Desvio Padrão do Custo por Geração")
+    # plt.show()
 
-    # Plotando o gráfico do desvio padrão da população
-    plt.plot(desvio_padrao_geracoes)
-    plt.xlabel("Geração")
-    plt.ylabel("Desvio Padrão do Custo")
-    plt.title("Desvio Padrão do Custo por Geração")
-    plt.show()
+    # # Plotando o gráfico do desvio padrão da população
+    # plt.plot(desvio_padrao_geracoes)
+    # plt.xlabel("Geração")
+    # plt.ylabel("Desvio Padrão do Custo")
+    # plt.title("Desvio Padrão do Custo por Geração")
+    # plt.show()
 
     return melhor_solucao, melhor_custo, tempoDeExecucao
 
@@ -353,9 +315,6 @@ def melhoramento(solucao, dados):
     E = math.ceil(
         random.uniform(1.1, 3) * max(dados.colunas[j].custo for j in solucao[0])
     )
-    E = math.ceil(
-        random.uniform(1.1, 3) * max(dados.colunas[j].custo for j in solucao[0])
-    )
 
     # Quantidade de colunas que cobrem cada linha
     wi = [0] * dados.nlinhas
@@ -388,9 +347,6 @@ def melhoramento(solucao, dados):
         Re = list(j for j in colunas_fora_da_solucao if dados.colunas[j].custo <= E)
 
         while len(Re) == 0:
-            E = math.ceil(
-                random.uniform(1.1, 3) * max(dados.colunas[j].custo for j in solucao[0])
-            )
             E = math.ceil(
                 random.uniform(1.1, 3) * max(dados.colunas[j].custo for j in solucao[0])
             )
@@ -451,12 +407,6 @@ def crossover_um_ponto(pai1, pai2):
     filho2 = pai2[:ponto_corte] + [
         gene for gene in pai1 if gene not in pai2[:ponto_corte]
     ]
-    filho1 = pai1[:ponto_corte] + [
-        gene for gene in pai2 if gene not in pai1[:ponto_corte]
-    ]
-    filho2 = pai2[:ponto_corte] + [
-        gene for gene in pai1 if gene not in pai2[:ponto_corte]
-    ]
     return filho1, filho2
 
 
@@ -469,9 +419,7 @@ def main():
     busca_local = int(
         sys.argv[6]
     )  # 0 para nao usar busca local, 1 para usar busca local
-    busca_local = int(
-        sys.argv[6]
-    )  # 0 para nao usar busca local, 1 para usar busca local
+
     dados = ler_arquivo(nome_do_arquivo)
 
     if busca_local == 0:
@@ -479,7 +427,6 @@ def main():
             melhor_solucao_sem_busca_local,
             melhor_custo_sem_busca_local,
             tempo_sem_busca_local,
-            melhores_solucoes_por_geracao_sem_busca_local,
         ) = algoritmo_genetico_sem_busca_local(
             dados,
             tamanho_populacao,
@@ -494,45 +441,19 @@ def main():
         print(
             "Custo da melhor solucao (sem busca local):", melhor_custo_sem_busca_local
         )
-        print(
-            "Melhor solucao encontrada (sem busca local):",
-            [coluna + 1 for coluna in melhor_solucao_sem_busca_local],
-        )  # Modificado aqui
-        print(
-            "Custo da melhor solucao (sem busca local):", melhor_custo_sem_busca_local
-        )
         print("Tempo de execucao (sem busca local):", tempo_sem_busca_local, "segundos")
-        print(
-            "Melhores solucoes por geracao (sem busca local):",
-            melhores_solucoes_por_geracao_sem_busca_local,
-        )
-
-    elif busca_local == 1:
-
-        print(
-            "Melhores solucoes por geracao (sem busca local):",
-            melhores_solucoes_por_geracao_sem_busca_local,
-        )
 
     elif busca_local == 1:
         (
             melhor_solucao_com_busca_local,
             melhor_custo_com_busca_local,
             tempo_com_busca_local,
-            melhores_solucoes_por_geracao_com_busca_local,
         ) = algoritmo_genetico_com_busca_local(
             dados,
             tamanho_populacao,
             num_geracoes,
             probabilidade_mutacao,
             elitismo_ratio,
-        )
-        print(
-            "Melhor solucao encontrada (com busca local):",
-            [coluna + 1 for coluna in melhor_solucao_com_busca_local],
-        )  # Modificado aqui
-        print(
-            "Custo da melhor solucao (com busca local):", melhor_custo_com_busca_local
         )
         print(
             "Melhor solucao encontrada (com busca local):",
