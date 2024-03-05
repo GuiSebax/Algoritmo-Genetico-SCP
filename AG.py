@@ -449,14 +449,7 @@ def main():
             "Custo da melhor solucao (com busca local):", melhor_custo_com_busca_local
         )
         print("Tempo de execucao (com busca local):", tempo_com_busca_local, "segundos")
-        """ print(
-            "Melhores solucoes por geracao (com busca local):",
-            melhores_solucoes_por_geracao_com_busca_local,
-        ) """
-        """ print(
-            "Melhores solucoes por geracao (com busca local):",
-            melhores_solucoes_por_geracao_com_busca_local,
-        ) """
+        
 
 
 if __name__ == "__main__":
