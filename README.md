@@ -28,3 +28,7 @@ Agora se o usuário quiser rodar o algoritmo com os seus próprios parâmetros, 
 
 Exemplo:
 ```python AG.py entradas/Teste_01.dat 100 100 0.9 0.1 1```
+
+
+
+![image](https://github.com/GuiSebax/Algoritmo-Gen-tico---MOA/assets/103221587/2d5ec170-c9c0-4c2f-a3ec-835b43c54f2e)
