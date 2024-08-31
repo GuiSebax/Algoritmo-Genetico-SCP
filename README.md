@@ -12,7 +12,7 @@ Para compilar o algoritmo, é necessário que o usuário tenho Python3 instalado
 
 Para testar usando os testes que nós usamos para obter as respostas, basta rodar os seguintes comandos:
 
-Para uma população de 100 e uma geração de 100 com busca local use
+Para uma população de 100 e uma geração de 100 com busca local use (É necessário que o usuário preste atenção nos diretórios onde os arquivos estão):
 
 `.\run_tests100.bat`
 
